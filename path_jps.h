@@ -35,6 +35,10 @@ struct walkpath_data2
             Y-coordinate of the end point.
     @param  flag
             Reserved, set to zero.
+    @param  step
+            0: Record only way-points.
+            1: Record every step.
+            N: Record every Nth step.
     @param  cell
             One of the CELL_CHK* constants to determine the type of
             collision testing.
@@ -43,7 +47,7 @@ struct walkpath_data2
     @return false
             Path was not found or it was too long.
 */
-bool path_search_jps(struct walkpath_data2* wpd, const int16 m, const int16 x0, const int16 y0, const int16 x1, const int16 y1, int flag, cell_chk cell);
+bool path_search_jps(struct walkpath_data2* wpd, const int16 m, const int16 x0, const int16 y0, const int16 x1, const int16 y1, int flag, unsigned int step, cell_chk cell);
 
 #ifdef __cplusplus
 }

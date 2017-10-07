@@ -1,4 +1,4 @@
-#if _MSC_VER <= 1600
+#if defined(_MSC_VER) && _MSC_VER <= 1600
 
 /*
     Down-level support for std::min and std::max.
@@ -26,7 +26,7 @@ namespace std
     }
 }
 
-#endif  /* _MSC_VER <= 1600 */
+#endif  /* _MSC_VER && _MSC_VER <= 1600 */
 
 #include "JPS.h"
 
@@ -53,7 +53,7 @@ public:
     }
 };
 
-bool path_search_jps(struct walkpath_data2* wpd, const int16 m, const int16 x0, const int16 y0, const int16 x1, const int16 y1, int flag, cell_chk cell)
+bool path_search_jps(struct walkpath_data2* wpd, const int16 m, const int16 x0, const int16 y0, const int16 x1, const int16 y1, int flag, unsigned int step, cell_chk cell)
 {
     struct map_data* md = &map[m];
 
@@ -75,7 +75,7 @@ bool path_search_jps(struct walkpath_data2* wpd, const int16 m, const int16 x0, 
     CCellChk grid(md, cell);
     JPS::PathVector path;
 
-    if(JPS::findPath(path, grid, x0, y0, x1, y1, 0 /* 0 = waypoints, 1 = every point, N = every Nth point */))
+    if(JPS::findPath(path, grid, x0, y0, x1, y1, step))
     {
         if(wpd)
         {
