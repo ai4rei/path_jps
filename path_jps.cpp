@@ -85,7 +85,7 @@ bool path_search_jps(struct walkpath_data2* wpd, const int16 m, const int16 x0, 
 
                 /* path does not include the start point */
                 wpd->x[0] = x0;
-                wpd->y[0] = y1;
+                wpd->y[0] = y0;
 
                 for(JPS::PathVector::iterator it = path.begin(); it!=path.end(); it++)
                 {
