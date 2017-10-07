@@ -79,7 +79,7 @@ bool path_search_jps(struct walkpath_data2* wpd, const int16 m, const int16 x0, 
     {
         if(wpd)
         {
-            if(path.size()<=ARRAYLENGTH(wpd->x))
+            if(path.size()<ARRAYLENGTH(wpd->x))
             {
                 size_t idx = 1;
 
