@@ -1,5 +1,9 @@
 #if _MSC_VER <= 1600
 
+/*
+    Down-level support for std::min and std::max.
+*/
+
 namespace std
 {
     template< typename T > const T& min(const T& One, const T& Two)
@@ -28,6 +32,9 @@ namespace std
 
 #include "path_jps.h"
 
+/*
+    Class used by JPS for accessing map data.
+*/
 class CCellChk
 {
 private:
@@ -76,7 +83,7 @@ bool path_search_jps(struct walkpath_data2* wpd, const int16 m, const int16 x0, 
             {
                 size_t idx = 1;
 
-                // path does not include the start point
+                /* path does not include the start point */
                 wpd->x[0] = x0;
                 wpd->y[0] = y1;
 
