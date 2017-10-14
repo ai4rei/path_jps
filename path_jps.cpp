@@ -53,11 +53,17 @@ public:
     }
 };
 
-bool path_search_jps(struct walkpath_data2* wpd, const int16 m, const int16 x0, const int16 y0, const int16 x1, const int16 y1, int flag, unsigned int step, cell_chk cell)
+bool path_search_jps(struct walkpath_data2* wpd, const int16 m, const int16 x0, const int16 y0, const int16 x1, const int16 y1, int flag, int limit, unsigned int step, cell_chk cell)
 {
+    bool found;
     struct map_data* md = &map[m];
 
     if(md->cell==NULL)
+    {
+        return false;
+    }
+
+    if(limit<0)
     {
         return false;
     }
@@ -75,7 +81,34 @@ bool path_search_jps(struct walkpath_data2* wpd, const int16 m, const int16 x0, 
     CCellChk grid(md, cell);
     JPS::PathVector path;
 
-    if(JPS::findPath(path, grid, x0, y0, x1, y1, step))
+    if(limit==0)
+    {// no limit
+        found = JPS::findPath(path, grid, x0, y0, x1, y1, step);
+    }
+    else
+    {// steps constraint
+        JPS::Internal::Searcher< CCellChk > search(grid);
+        JPS::Result result = search.findPathInit(JPS::Pos(x0, y0), JPS::Pos(x1, y1));
+
+        if(result==JPS::EMPTY_PATH)
+        {// start/end overlaps
+            found = true;
+        }
+        else
+        {
+            if(result==JPS::NEED_MORE_STEPS)
+            {// there you go
+                result = search.findPathStep(limit);
+            }
+
+            if(result==JPS::FOUND_PATH)
+            {// finish up
+                found = search.findPathFinish(path, step);
+            }
+        }
+    }
+
+    if(found)
     {
         if(wpd)
         {
